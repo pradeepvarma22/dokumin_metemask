@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Dashboard
+    <form action="{% url 'checkMe' %}" method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+        <label for="name">name </label>
+        <input type="text" name="name" id="name" required>
+        <br>
+        <label for="symbol">Symbol </label>
+        <input type="text" name="symbol" id="symbol" required>
+        <br>
+        <label for="desc">descriptuion </label>
+        <input type="text" name="desc" id="desc" required>
+        <br>
+        <label for="csvf">CSV </label>
+        <input type="file" name="csvf" id="csvf" required>
+        <br>
+        <input type="submit">
+    </form>
+
+
+</body>
+
+</html>
