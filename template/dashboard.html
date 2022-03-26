@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>DokuMint</title>
 </head>
 
 <body>
@@ -13,13 +13,13 @@
     <form action="{% url 'checkMe' %}" method="POST" enctype="multipart/form-data">
 
         {% csrf_token %}
-        <label for="name">name </label>
+        <label for="name">Name </label>
         <input type="text" name="name" id="name" required>
         <br>
         <label for="symbol">Symbol </label>
         <input type="text" name="symbol" id="symbol" required>
         <br>
-        <label for="desc">descriptuion </label>
+        <label for="desc">Descriptuion </label>
         <input type="text" name="desc" id="desc" required>
         <br>
         <label for="csvf">CSV </label>

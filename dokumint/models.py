@@ -21,6 +21,7 @@ class Certifier(models.Model):
 class Receiver(models.Model):
     name = models.CharField(max_length=255,null=True,blank=True)
     certifier =  models.ForeignKey(Certifier,on_delete=models.CASCADE)
+    course = models.CharField(max_length=255,null=True,blank=True)
     address =models.CharField(max_length=255,null=True,blank=True)
     image = models.ImageField(upload_to=get_file_path,verbose_name=(u'File'))
     
