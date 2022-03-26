@@ -4,7 +4,8 @@ import pandas as pd
 from PIL import Image, ImageDraw, ImageFont
 import json
 import requests
-
+import os
+from htmlwebshot import WebShot
 from django.core.files.base import File
 from django.conf.urls.static import static
 from utils.keys import keys
@@ -22,7 +23,6 @@ def Home(request):
 
 def Validate(request):
     if request.POST:
-
         wallet_address = request.POST.get('wallet_address')
         moralis_user_id = request.POST.get('moralis_user_id')
         tempobj=None
@@ -65,45 +65,37 @@ def checkMe(request):
         for index, i in df.iterrows():
             obj = Receiver()
             obj.name = i['Name'] 
-            #print(obj.name)
             obj.certifier = certifier
-            #print(obj.certifier)
             obj.address = i['Address']
-            #print(obj.address)
             obj.course = i['Course'] 
-            generateImage(i.Name,moralis_user_id)
-            path_image = 'images/{}/'.format(moralis_user_id) + str(obj.name) + ".png"
-            outfile = Image.open(path_image)
-            obj.image = File(outfile)
+            html_template_file = open('certificate.html','rt')
+            data = html_template_file.read()
+            data = data.replace('user_name_var',obj.name )
+            data = data.replace('completion_course_var',obj.course)
+            data = data.replace('Certified_by_var',name)
+            html_template_file.close()
+            html_template_file = open("data.txt", "wt")
+            html_template_file.write(data)
+            html_template_file.close()
+            html_template_file = open('certificate.html','rt')
+
+            print(html_template_file)
+            html_template_file.close()
+            # image generate using html
+            shot = WebShot()
+            shot.quality = 100
+            image = shot.create_pic(html="certificate.html")
+            
+
+
+
+          #  generateImage(i.Name,moralis_user_id)
+            # path_image = 'images/{}/'.format(moralis_user_id) + str(obj.name) + ".png"
+            # outfile = Image.open(path_image)
+            # obj.image = File(outfile)
             obj.save()
             
     return render(request,'sucess.html')
-
-
-def generateImage(name,user):
-    imaget = Image.open('certificate.png')
-    draw = ImageDraw.Draw(imaget)
-    draw.text(xy=(725,760),text='{}'.format(name),fill=(0,0,0))
-    imaget.save('images/{}/{}.png'.format(user,name))
-
-    meta = []
-    att = {"trait_type": "Name", "value":""}
-    meta.append(att)
-
-    token = {
-        "image": base_uri + str(k) + '.png',
-        "tokenId": k,
-        "name": project_name + ' ' + "#" + str(k),
-        "attributes": meta
-    }
-
-    meta_path = 'metadata/{}/'.format(user)
-    meta_file = meta_path + "/" + str(k) + '.json'
-
-    with open(meta_file, 'w') as outfile:
-        json.dump(token, outfile, indent=4)
-
-    return imaget
 
 
 def uploadIPFS(request):
