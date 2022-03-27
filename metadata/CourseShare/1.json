@@ -1,0 +1,19 @@
+{
+    "image": "https://ipfs.io/ipfs/1.png",
+    "tokenId": "1",
+    "name": "CourseShare #1",
+    "attributes": [
+        {
+            "trait_type": "Receiver",
+            "value": "Shashank"
+        },
+        {
+            "trait_type": "Course",
+            "value": "Python A-Z"
+        },
+        {
+            "trait_type": "Certifier",
+            "value": "CourseShare"
+        }
+    ]
+}

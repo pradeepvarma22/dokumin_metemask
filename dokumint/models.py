@@ -16,7 +16,7 @@ class Certifier(models.Model):
     moralisid = models.CharField(max_length=255,null=True,blank=True)
     
     def __str__(self):
-        return self.name
+        return self.moralisid or ''
 
 class Receiver(models.Model):
     name = models.CharField(max_length=255,null=True,blank=True)
@@ -26,7 +26,7 @@ class Receiver(models.Model):
     image = models.ImageField(upload_to=get_file_path,verbose_name=(u'File'))
     
     def __str__(self):
-        return str(self.certifier)
+        return self.name or ''
 
 class ProjectDesc(models.Model):
     certifier = models.ForeignKey(Certifier, null=True, on_delete= models.SET_NULL)
@@ -37,4 +37,4 @@ class ProjectDesc(models.Model):
     meta_hash = models.CharField(max_length=255,null=True,blank=True)
 
     def __str__(self):
-        return self.proj_name
+        return self.proj_name or ''
